@@ -654,14 +654,17 @@ if get_option('enable-mediapipe')
   mediapipe_incdir = include_directories(
     MEDIAPIPE_HOME,
     join_paths(MEDIAPIPE_HOME, 'bazel-bin'),
-    join_paths(MEDIAPIPE_HOME, 'bazel-mediapipe/external/eigen_archive'),
+    # join_paths(MEDIAPIPE_HOME, 'bazel-mediapipe/external/eigen_archive'),
     join_paths(MEDIAPIPE_HOME, 'bazel-mediapipe/external/com_google_absl'),
   )
+  
 
+  nnstreamer_libdir_path = meson.source_root() + '/tools/development/mediapipe_home/'
+  message(nnstreamer_libdir_path)
   run_command('sh', '-c', meson.source_root() + '/tools/development/gen_mediapipe_libs.sh ' + nnstreamer_libdir, check : true)
 
-  mediapipe_internal_dep = cxx.find_library('mediapipe_internal', dirs: nnstreamer_libdir)
-  mediapipe_external_dep = cxx.find_library('mediapipe_external', dirs: nnstreamer_libdir)
+  mediapipe_internal_dep = cxx.find_library('mediapipe_internal', dirs: nnstreamer_libdir_path)
+  mediapipe_external_dep = cxx.find_library('mediapipe_external', dirs: nnstreamer_libdir_path)
 
   opencv_core_dep = cc.find_library('opencv_core', dirs: join_paths(MEDIAPIPE_HOME, opencv_path))
   opencv_video_dep = cc.find_library('opencv_video', dirs: join_paths(MEDIAPIPE_HOME, opencv_path))

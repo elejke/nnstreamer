@@ -248,7 +248,7 @@ mediapipe_subplugin::invoke (const GstTensorMemory *input, GstTensorMemory *outp
 
   /* TODO to make it better, start the graph at init or previous step */
   mediapipe::OutputStreamPoller poller
-      = graph.AddOutputStreamPoller (outputInfo.info[0].name).ValueOrDie ();
+      = graph.AddOutputStreamPoller (outputInfo.info[0].name).value();
   status = graph.StartRun ({});
   if (!status.ok ()) {
     std::cerr << "Fail to start mediapipe graph" << std::endl;
